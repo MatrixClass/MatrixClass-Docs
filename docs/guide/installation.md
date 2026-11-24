@@ -22,7 +22,11 @@
 
 ## Linux 与 macOS
 
-Linux 使用对应架构的发行目录，macOS 使用 Intel、Apple Silicon 或 Universal 包。首次运行时需要给屏幕采集、输入控制和麦克风功能授予系统权限；没有权限时，控制消息仍可能正常连接，但采集类功能会不可用。
+Linux 的教师端和学生端是两个独立安装包：教师机安装 `matrixclass-teacher`，学生机安装 `matrixclass-student`。统信 UOS / Deepin / 麒麟 / Ubuntu 选 `.deb`，openEuler / 龙蜥 / CentOS 选 `.rpm`，其他发行版使用 tar.gz 目录包。学生端安装后立即启动，并在每次登录桌面时自动启动，卸载需要退出密码。详细步骤见 [Linux 安装](/deploy/linux)。
+
+macOS 使用 Universal `dmg`（同时包含教师端和学生端），也可以选择 Intel 或 Apple Silicon 的 zip 包，详见 [macOS 安装](/deploy/macos)。
+
+首次运行时需要给屏幕采集、输入控制和麦克风功能授予系统权限；没有权限时，控制消息仍可能正常连接，但采集类功能会不可用。
 
 ## 首次验证
 

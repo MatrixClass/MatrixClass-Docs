@@ -1,6 +1,6 @@
 # 发行包与目录结构
 
-发行文件按平台和架构分目录。当前可用于桌面 UI 的正式目标是 Windows amd64/arm64、Linux amd64/arm64 和 macOS amd64/arm64/Universal；Linux loong64 当前只用于交叉编译验证，详见[跨平台能力](/deploy/platforms)。
+发行文件按平台和架构分目录。当前桌面 UI 发布目标是 Windows amd64/arm64、Linux amd64/arm64/loong64 和 macOS amd64/arm64/Universal；Linux loong64 仍建议在龙芯实机完成验证，详见[跨平台能力](/deploy/platforms)。
 
 ## Windows
 
@@ -14,7 +14,13 @@
 
 ## Linux
 
-按 CPU 架构选择发行目录。Linux amd64/arm64 可以使用目录包和 tar.gz 包安装；在有 `dpkg-deb` 或 `rpmbuild` 的 Linux 主机上还可以生成 `.deb` 或 `.rpm`。屏幕采集、输入控制和音频能力依赖桌面环境与系统权限；无桌面环境的服务器只能验证协议、文件和控制类能力。详细步骤见 [Linux 安装](/deploy/linux)。
+按 CPU 架构选择安装包。每个架构提供：
+
+- 教师端 `matrixclass-teacher_<版本>_<arch>.deb` / `matrixclass-teacher-<版本>-1.<arch>.rpm`：安装到教师机。
+- 学生端 `matrixclass-student_<版本>_<arch>.deb` / `matrixclass-student-<版本>-1.<arch>.rpm`：安装到学生机，安装后立即启动、登录自启，卸载需要退出密码。
+- 目录包 `matrixclass-linux-<arch>.tar.gz`：同时包含两个程序，适合其他发行版或临时测试。
+
+屏幕采集、输入控制和音频能力依赖桌面环境与系统权限；无桌面环境的服务器只能验证协议、文件和控制类能力。详细步骤见 [Linux 安装](/deploy/linux)。
 
 ## 升级建议
 

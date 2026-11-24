@@ -14,7 +14,7 @@ MatrixClass 支持 Windows amd64/arm64、Linux amd64/arm64/loong64 和 macOS amd
 - [频道与 KCP](/deploy/network)：了解发现、会话和重连。
 - [防火墙与多网卡](/deploy/firewall)：多网卡同时监听、自动忽略虚拟网卡，以及无线隔离排查。
 - [Windows 安装](/deploy/windows)：安装程序、防火墙放行、批量部署与卸载。
-- [Linux 安装](/deploy/linux)：目录包、deb / rpm 和桌面权限。
+- [Linux 安装](/deploy/linux)：教师端 / 学生端 deb、rpm 分包，目录包和桌面权限。
 - [macOS 安装](/deploy/macos)：DMG、未签名应用首次打开和系统权限。
 - [跨平台能力](/deploy/platforms)：查看桌面权限和架构差异。
 - [发行包与目录结构](/deploy/releases)：了解安装包、DMG 和升级备份。

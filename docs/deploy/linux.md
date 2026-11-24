@@ -1,6 +1,12 @@
 # Linux 安装
 
-本页说明 Linux amd64 和 arm64 的正式桌面安装方式，以及 loong64 当前的实际支持边界。安装包采用目录包/tar.gz 为主，发行版 `.deb` 和 `.rpm` 属于可选构建产物。
+本页说明 Linux amd64、arm64 和 loong64（龙芯）的桌面安装方式。推荐使用发行版安装包：教师端和学生端分成两个独立的 `.deb` / `.rpm`，教师机和学生机分别安装；其他发行版或免安装场景使用 tar.gz 目录包（同时包含两个程序）。
+
+| 场景 | 推荐方式 |
+| --- | --- |
+| 统信 UOS / Deepin / 银河麒麟 / Ubuntu / Debian | `matrixclass-teacher` / `matrixclass-student` 的 `.deb` |
+| openEuler / 龙蜥 Anolis / CentOS / Fedora | `matrixclass-teacher` / `matrixclass-student` 的 `.rpm` |
+| 其他发行版、临时测试 | `matrixclass-linux-<arch>.tar.gz` + `install.sh` |
 
 ## 支持范围
 
@@ -8,7 +14,7 @@
 | --- | --- | --- |
 | amd64 / x86_64 | 正式桌面目标 | 教师端、学生端、网络、文件、UI；采集能力取决于桌面权限 |
 | arm64 / aarch64 | 正式桌面目标 | 同上，需选择 arm64 包 |
-| loong64 / loongarch64 | 编译验证目标 | 当前可生成二进制检查包，但 MyGo Linux 原生 UI 尚未覆盖，不能当作可用桌面发行版 |
+| loong64 / loongarch64 | 桌面发布目标（待实机验证） | 提供 deb / rpm / tar.gz，原生 UI 后端已覆盖；龙芯桌面的 OpenGL、屏幕采集和音频仍需在实机确认 |
 | riscv64、386、armv7 | 编译验证目标 | 不属于当前正式 UI 发布目标 |
 
 ## 安装前准备
@@ -234,6 +240,21 @@ RPM 系发行版需要在对应 Linux 主机安装 `rpm-build` 后再生成和�
 
 ## 卸载
 
+### deb / rpm 安装的
+
+```sh
+# deb 系
+sudo apt remove matrixclass-student
+sudo apt remove matrixclass-teacher
+# rpm 系
+sudo dnf remove matrixclass-student
+sudo dnf remove matrixclass-teacher
+```
+
+卸载学生端时会弹出退出密码验证，验证失败或取消会中止卸载。请在设置过密码的用户桌面会话中执行；在没有桌面的 SSH 终端里卸载会被拒绝。教师端卸载不需要密码。
+
+### tar.gz 目录包安装的
+
 使用安装目录中的脚本，而不是直接删除 `/opt/matrixclass`：
 
 ```sh
@@ -256,6 +277,18 @@ matrixclass-student
 
 确认 `DISPLAY` 有值、`libX11.so.6` 和 `libXtst.so.6` 存在，并检查当前用户是否拥有桌面会话。Wayland 环境需要系统桌面授权；不能通过修改频道或重复启动解决权限问题。
 
+### 安装了 deb / rpm 但学生端没有自动启动
+
+安装脚本只会在“已登录的图形桌面会话”中启动学生端。通过 SSH 远程安装、或安装时还没有用户登录桌面，学生端会在下次登录桌面时由 `/etc/xdg/autostart/matrixclass-student.desktop` 自动启动；也可以在应用菜单中手动打开“矩联电子教室学生端”。
+
+### 卸载学生端提示要在桌面会话中执行
+
+学生端设置了退出密码后，卸载必须完成密码验证。请登录到设置过密码的用户桌面，在终端中执行卸载命令，按提示输入密码。
+
+### 教师机和学生机能不能装在同一台电脑
+
+可以。两个包互不依赖，同时安装即可在一台机器上测试教师端和学生端。
+
 ### loong64 能不能正式安装
 
-当前不能按正式桌面版本承诺。构建脚本可以生成 `loong64` 检查产物，但现有 MyGo Linux 原生后端只覆盖 amd64/arm64，启动时可能提示该架构不支持 UI。等待原生 UI 后端覆盖并完成实机验证后，才能列为正式安装目标。
+可以安装。发布页提供 loong64 的 deb、rpm 和 tar.gz，原生 UI 后端已覆盖 LoongArch64。由于龙芯桌面的显卡驱动、屏幕采集和音频环境差异较大，正式上课前请先在目标机器上完成广播、监控和文件分发测试。
