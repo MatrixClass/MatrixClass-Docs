@@ -13,8 +13,26 @@ outline: [2, 3]
 ## 如何选择
 
 - **Windows**：教师机下载“教师端安装包”，学生机下载“学生端安装包”。便携压缩包内同时包含两个程序，解压即用，适合临时测试。
-- **Linux**：优先使用系统安装包。Debian / Ubuntu / 统信 UOS / 麒麟选 `deb`，Fedora / openEuler / 龙蜥选 `rpm`，其他发行版使用 `tar.gz`。
-- **macOS**：推荐下载 Universal 的 `dmg`，打开后把应用拖到“应用程序”文件夹即可。
+- **Linux**：教师端和学生端是两个独立的安装包，教师机下载“教师端安装包”，学生机下载“学生端安装包”。Debian / Ubuntu / 统信 UOS / 深度 / 麒麟选 `deb`，Fedora / openEuler / 龙蜥 / CentOS 选 `rpm`；其他发行版使用 `tar.gz`（同时包含两个程序）。
+- **macOS**：推荐下载 Universal 的 `dmg`，其中同时包含教师端和学生端，打开后把需要的应用拖到“应用程序”文件夹即可。
+
+Linux 安装包文件名对照（以 1.1.0、x86_64 为例）：
+
+| 发行版 | 教师机 | 学生机 |
+| --- | --- | --- |
+| Debian / Ubuntu / 统信 UOS / 深度 / 麒麟 | `matrixclass-teacher_1.1.0_amd64.deb` | `matrixclass-student_1.1.0_amd64.deb` |
+| Fedora / openEuler / 龙蜥 / CentOS | `matrixclass-teacher-1.1.0-1.x86_64.rpm` | `matrixclass-student-1.1.0-1.x86_64.rpm` |
+
+ARM64 把 `amd64` / `x86_64` 换成 `arm64` / `aarch64`，龙芯换成 `loong64` / `loongarch64`。安装命令：
+
+```bash
+# deb 系
+sudo apt install ./matrixclass-student_1.1.0_amd64.deb
+# rpm 系
+sudo dnf install ./matrixclass-student-1.1.0-1.x86_64.rpm
+```
+
+学生端安装后会立即启动；卸载学生端需要输入首次启动时设置的退出密码。
 
 不确定硬件架构时：
 
@@ -35,7 +53,7 @@ sha256sum -c SHA256SUMS --ignore-missing
 
 ```powershell
 # Windows PowerShell
-Get-FileHash .\matrixclass-teacher-windows-amd64-1.0.0-setup.exe -Algorithm SHA256
+Get-FileHash .\matrixclass-teacher-windows-amd64-1.1.0-setup.exe -Algorithm SHA256
 ```
 
 ## 下一步

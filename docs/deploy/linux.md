@@ -168,35 +168,35 @@ systemctl --user status matrixclass-teacher.service
 | `matrixclass-teacher` | 教师端 | 教师机 |
 | `matrixclass-student` | 学生端（安装后立即启动、登录桌面自动启动、卸载需要退出密码） | 学生机 |
 
-文件名示例（以 1.0.1 为例）：
+文件名示例（以 1.1.0 为例）：
 
 | 系统 | 教师机 | 学生机 |
 |---|---|---|
-| 统信 UOS / Deepin / 银河麒麟 / Ubuntu / Debian（x86） | `matrixclass-teacher_1.0.1_amd64.deb` | `matrixclass-student_1.0.1_amd64.deb` |
-| 同上（鲲鹏 / 飞腾 ARM） | `matrixclass-teacher_1.0.1_arm64.deb` | `matrixclass-student_1.0.1_arm64.deb` |
-| 同上（龙芯） | `matrixclass-teacher_1.0.1_loong64.deb` | `matrixclass-student_1.0.1_loong64.deb` |
-| openEuler / 龙蜥 Anolis / CentOS / Fedora（x86） | `matrixclass-teacher-1.0.1-1.x86_64.rpm` | `matrixclass-student-1.0.1-1.x86_64.rpm` |
-| 同上（ARM） | `matrixclass-teacher-1.0.1-1.aarch64.rpm` | `matrixclass-student-1.0.1-1.aarch64.rpm` |
-| 同上（龙芯） | `matrixclass-teacher-1.0.1-1.loongarch64.rpm` | `matrixclass-student-1.0.1-1.loongarch64.rpm` |
+| 统信 UOS / Deepin / 银河麒麟 / Ubuntu / Debian（x86） | `matrixclass-teacher_1.1.0_amd64.deb` | `matrixclass-student_1.1.0_amd64.deb` |
+| 同上（鲲鹏 / 飞腾 ARM） | `matrixclass-teacher_1.1.0_arm64.deb` | `matrixclass-student_1.1.0_arm64.deb` |
+| 同上（龙芯） | `matrixclass-teacher_1.1.0_loong64.deb` | `matrixclass-student_1.1.0_loong64.deb` |
+| openEuler / 龙蜥 Anolis / CentOS / Fedora（x86） | `matrixclass-teacher-1.1.0-1.x86_64.rpm` | `matrixclass-student-1.1.0-1.x86_64.rpm` |
+| 同上（ARM） | `matrixclass-teacher-1.1.0-1.aarch64.rpm` | `matrixclass-student-1.1.0-1.aarch64.rpm` |
+| 同上（龙芯） | `matrixclass-teacher-1.1.0-1.loongarch64.rpm` | `matrixclass-student-1.1.0-1.loongarch64.rpm` |
 
 不确定 CPU 架构时执行 `uname -m`：`x86_64` 选 amd64/x86_64，`aarch64` 选 arm64/aarch64，`loongarch64` 选 loong64/loongarch64。
 
 教师机（deb 系）：
 
 ```sh
-sudo apt install ./matrixclass-teacher_1.0.1_amd64.deb
+sudo apt install ./matrixclass-teacher_1.1.0_amd64.deb
 ```
 
 学生机（deb 系）：
 
 ```sh
-sudo apt install ./matrixclass-student_1.0.1_amd64.deb
+sudo apt install ./matrixclass-student_1.1.0_amd64.deb
 ```
 
 rpm 系把 `apt` 换成 `dnf`（老系统用 `yum`）：
 
 ```sh
-sudo dnf install ./matrixclass-student-1.0.1-1.x86_64.rpm
+sudo dnf install ./matrixclass-student-1.1.0-1.x86_64.rpm
 ```
 
 学生端包的行为：

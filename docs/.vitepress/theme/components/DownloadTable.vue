@@ -19,7 +19,6 @@ interface Row {
   arch: string
   teacher: Rule[]
   student: Rule[]
-  installer: Rule[]
   portable: Rule[]
   note: string
 }
@@ -29,7 +28,6 @@ const rows: Row[] = [
     os: 'Windows', arch: 'x86_64',
     teacher: [{ label: 'exe', match: /^matrixclass-teacher-windows-amd64-.*-setup\.exe$/ }],
     student: [{ label: 'exe', match: /^matrixclass-student-windows-amd64-.*-setup\.exe$/ }],
-    installer: [],
     portable: [{ label: 'zip', match: /^matrixclass-windows-amd64\.zip$/ }],
     note: '支持 Windows 10 / 11。学生端安装完成后会自动启动，首次启动需设置退出密码和频道 ID。',
   },
@@ -37,7 +35,6 @@ const rows: Row[] = [
     os: 'Windows', arch: 'arm64',
     teacher: [{ label: 'exe', match: /^matrixclass-teacher-windows-arm64-.*-setup\.exe$/ }],
     student: [{ label: 'exe', match: /^matrixclass-student-windows-arm64-.*-setup\.exe$/ }],
-    installer: [],
     portable: [{ label: 'zip', match: /^matrixclass-windows-arm64\.zip$/ }],
     note: '适用于 Windows on ARM 设备。',
   },
@@ -51,7 +48,6 @@ const rows: Row[] = [
       { label: 'deb', match: /^matrixclass-student_.*_amd64\.deb$/ },
       { label: 'rpm', match: /^matrixclass-student-.*\.x86_64\.rpm$/ },
     ],
-    installer: [],
     portable: [{ label: 'tar.gz', match: /^matrixclass-linux-amd64\.tar\.gz$/ }],
     note: '需要图形桌面（X11）。教师机装教师端包，学生机装学生端包；Debian 系选 deb，openEuler / 龙蜥等选 rpm。',
   },
@@ -65,7 +61,6 @@ const rows: Row[] = [
       { label: 'deb', match: /^matrixclass-student_.*_arm64\.deb$/ },
       { label: 'rpm', match: /^matrixclass-student-.*\.aarch64\.rpm$/ },
     ],
-    installer: [],
     portable: [{ label: 'tar.gz', match: /^matrixclass-linux-arm64\.tar\.gz$/ }],
     note: '适用于鲲鹏、飞腾、树莓派等 ARM64 设备。',
   },
@@ -79,28 +74,27 @@ const rows: Row[] = [
       { label: 'deb', match: /^matrixclass-student_.*_loong64\.deb$/ },
       { label: 'rpm', match: /^matrixclass-student-.*\.loongarch64\.rpm$/ },
     ],
-    installer: [],
     portable: [{ label: 'tar.gz', match: /^matrixclass-linux-loong64\.tar\.gz$/ }],
     note: '适用于龙芯 3A5000 / 3A6000 等新世界 LoongArch 系统。',
   },
   {
     os: 'macOS', arch: 'Universal',
-    teacher: [], student: [],
-    installer: [{ label: 'dmg', match: /^matrixclass-macos-universal\.dmg$/ }],
+    teacher: [{ label: 'dmg', match: /^matrixclass-macos-universal\.dmg$/ }],
+    student: [{ label: 'dmg', match: /^matrixclass-macos-universal\.dmg$/ }],
     portable: [{ label: 'zip', match: /^matrixclass-macos-universal\.zip$/ }],
-    note: '同时支持 Intel 与 Apple 芯片。未经苹果公证，首次打开需在“隐私与安全性”中允许。',
+    note: 'dmg 内同时包含教师端与学生端，同时支持 Intel 与 Apple 芯片。未经苹果公证，首次打开需在“隐私与安全性”中允许。',
   },
   {
     os: 'macOS', arch: 'x86_64',
-    teacher: [], student: [], installer: [],
+    teacher: [], student: [],
     portable: [{ label: 'zip', match: /^matrixclass-macos-amd64\.zip$/ }],
-    note: '仅 Intel 芯片 Mac。',
+    note: '仅 Intel 芯片 Mac，压缩包内同时包含教师端与学生端。',
   },
   {
     os: 'macOS', arch: 'arm64',
-    teacher: [], student: [], installer: [],
+    teacher: [], student: [],
     portable: [{ label: 'zip', match: /^matrixclass-macos-arm64\.zip$/ }],
-    note: '仅 Apple 芯片（M 系列）Mac。',
+    note: '仅 Apple 芯片（M 系列）Mac，压缩包内同时包含教师端与学生端。',
   },
 ]
 
@@ -187,7 +181,6 @@ onMounted(async () => {
           <th>硬件架构</th>
           <th>教师端安装包</th>
           <th>学生端安装包</th>
-          <th>系统安装包</th>
           <th>便携压缩包</th>
           <th>注意事项</th>
         </tr>
@@ -196,7 +189,7 @@ onMounted(async () => {
         <tr v-for="row in filtered" :key="row.os + row.arch">
           <td>{{ row.os }}</td>
           <td>{{ row.arch }}</td>
-          <td v-for="col in [row.teacher, row.student, row.installer, row.portable]">
+          <td v-for="col in [row.teacher, row.student, row.portable]">
             <a v-for="rule in col" :key="rule.label" class="mc-btn" :class="{ missing: state === 'ready' && !find(rule) }"
                :href="href(rule)" :title="title(rule)" target="_blank" rel="noreferrer">{{ rule.label }}</a>
           </td>
