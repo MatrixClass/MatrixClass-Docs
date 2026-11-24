@@ -43,31 +43,43 @@ const rows: Row[] = [
   },
   {
     os: 'Linux', arch: 'x86_64',
-    teacher: [], student: [],
-    installer: [
-      { label: 'deb', match: /^matrixclass-.*-amd64\.deb$/ },
-      { label: 'rpm', match: /^matrixclass-.*\.x86_64\.rpm$/ },
+    teacher: [
+      { label: 'deb', match: /^matrixclass-teacher_.*_amd64\.deb$/ },
+      { label: 'rpm', match: /^matrixclass-teacher-.*\.x86_64\.rpm$/ },
     ],
+    student: [
+      { label: 'deb', match: /^matrixclass-student_.*_amd64\.deb$/ },
+      { label: 'rpm', match: /^matrixclass-student-.*\.x86_64\.rpm$/ },
+    ],
+    installer: [],
     portable: [{ label: 'tar.gz', match: /^matrixclass-linux-amd64\.tar\.gz$/ }],
-    note: '需要图形桌面（X11）。deb / rpm 包同时包含教师端与学生端。',
+    note: '需要图形桌面（X11）。教师机装教师端包，学生机装学生端包；Debian 系选 deb，openEuler / 龙蜥等选 rpm。',
   },
   {
     os: 'Linux', arch: 'aarch64',
-    teacher: [], student: [],
-    installer: [
-      { label: 'deb', match: /^matrixclass-.*-arm64\.deb$/ },
-      { label: 'rpm', match: /^matrixclass-.*\.aarch64\.rpm$/ },
+    teacher: [
+      { label: 'deb', match: /^matrixclass-teacher_.*_arm64\.deb$/ },
+      { label: 'rpm', match: /^matrixclass-teacher-.*\.aarch64\.rpm$/ },
     ],
+    student: [
+      { label: 'deb', match: /^matrixclass-student_.*_arm64\.deb$/ },
+      { label: 'rpm', match: /^matrixclass-student-.*\.aarch64\.rpm$/ },
+    ],
+    installer: [],
     portable: [{ label: 'tar.gz', match: /^matrixclass-linux-arm64\.tar\.gz$/ }],
     note: '适用于鲲鹏、飞腾、树莓派等 ARM64 设备。',
   },
   {
     os: 'Linux', arch: 'loongarch64',
-    teacher: [], student: [],
-    installer: [
-      { label: 'deb', match: /^matrixclass-.*-loong64\.deb$/ },
-      { label: 'rpm', match: /^matrixclass-.*\.loongarch64\.rpm$/ },
+    teacher: [
+      { label: 'deb', match: /^matrixclass-teacher_.*_loong64\.deb$/ },
+      { label: 'rpm', match: /^matrixclass-teacher-.*\.loongarch64\.rpm$/ },
     ],
+    student: [
+      { label: 'deb', match: /^matrixclass-student_.*_loong64\.deb$/ },
+      { label: 'rpm', match: /^matrixclass-student-.*\.loongarch64\.rpm$/ },
+    ],
+    installer: [],
     portable: [{ label: 'tar.gz', match: /^matrixclass-linux-loong64\.tar\.gz$/ }],
     note: '适用于龙芯 3A5000 / 3A6000 等新世界 LoongArch 系统。',
   },

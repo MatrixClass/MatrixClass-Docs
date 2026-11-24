@@ -159,7 +159,56 @@ systemctl --user status matrixclass-teacher.service
 
 服务模板依赖图形会话；如果桌面尚未登录、`DISPLAY` 不存在或桌面权限未授予，屏幕采集和 UI 可能不可用。不要在无桌面的系统服务环境中期待完整桌面功能。
 
-## 可选：生成 `.deb` 和 `.rpm`
+## 使用 `.deb` / `.rpm` 安装
+
+发行版安装包按“角色”拆成两个独立的包，教师机和学生机各装各的：
+
+| 包名 | 用途 | 安装到 |
+|---|---|---|
+| `matrixclass-teacher` | 教师端 | 教师机 |
+| `matrixclass-student` | 学生端（安装后立即启动、登录桌面自动启动、卸载需要退出密码） | 学生机 |
+
+文件名示例（以 1.0.1 为例）：
+
+| 系统 | 教师机 | 学生机 |
+|---|---|---|
+| 统信 UOS / Deepin / 银河麒麟 / Ubuntu / Debian（x86） | `matrixclass-teacher_1.0.1_amd64.deb` | `matrixclass-student_1.0.1_amd64.deb` |
+| 同上（鲲鹏 / 飞腾 ARM） | `matrixclass-teacher_1.0.1_arm64.deb` | `matrixclass-student_1.0.1_arm64.deb` |
+| 同上（龙芯） | `matrixclass-teacher_1.0.1_loong64.deb` | `matrixclass-student_1.0.1_loong64.deb` |
+| openEuler / 龙蜥 Anolis / CentOS / Fedora（x86） | `matrixclass-teacher-1.0.1-1.x86_64.rpm` | `matrixclass-student-1.0.1-1.x86_64.rpm` |
+| 同上（ARM） | `matrixclass-teacher-1.0.1-1.aarch64.rpm` | `matrixclass-student-1.0.1-1.aarch64.rpm` |
+| 同上（龙芯） | `matrixclass-teacher-1.0.1-1.loongarch64.rpm` | `matrixclass-student-1.0.1-1.loongarch64.rpm` |
+
+不确定 CPU 架构时执行 `uname -m`：`x86_64` 选 amd64/x86_64，`aarch64` 选 arm64/aarch64，`loongarch64` 选 loong64/loongarch64。
+
+教师机（deb 系）：
+
+```sh
+sudo apt install ./matrixclass-teacher_1.0.1_amd64.deb
+```
+
+学生机（deb 系）：
+
+```sh
+sudo apt install ./matrixclass-student_1.0.1_amd64.deb
+```
+
+rpm 系把 `apt` 换成 `dnf`（老系统用 `yum`）：
+
+```sh
+sudo dnf install ./matrixclass-student-1.0.1-1.x86_64.rpm
+```
+
+学生端包的行为：
+
+- 安装完成后，会在当前已登录的桌面会话里立即启动学生端，首次启动设置退出密码和频道 ID。
+- 写入 `/etc/xdg/autostart/matrixclass-student.desktop`，之后每次登录桌面自动启动。
+- 卸载（`sudo apt remove matrixclass-student` / `sudo dnf remove matrixclass-student`）前会弹出退出密码验证，验证失败或取消会中止卸载。需要在已设置密码的用户桌面会话中执行卸载。
+- 升级安装不需要密码，会自动结束旧进程并启动新版本。
+
+两个包互不依赖；同一台机器需要同时测试教师端和学生端时可以都装。
+
+### 自行构建 `.deb` / `.rpm`
 
 目录包构建完成后，在 Linux 主机执行：
 
@@ -169,8 +218,8 @@ scripts/build-linux-distro-packages.sh dist/linux amd64
 
 生成条件：
 
-- 安装 `dpkg-deb` 才会生成 `.deb`。
-- 安装 `rpmbuild` 才会生成 `.rpm`。
+- 安装 `dpkg-deb` 才会生成 `.deb`（教师端、学生端各一个）。
+- 安装 `rpmbuild` 才会生成 `.rpm`（教师端、学生端各一个）。
 - 缺少其中一个工具只跳过对应格式，不代表另一个格式失败。
 
 例如 Debian/Ubuntu：
@@ -178,7 +227,7 @@ scripts/build-linux-distro-packages.sh dist/linux amd64
 ```sh
 sudo apt install dpkg-dev
 scripts/build-linux-distro-packages.sh dist/linux amd64
-sudo apt install ./dist/linux/matrixclass-<version>-amd64.deb
+sudo apt install ./dist/linux/matrixclass-student_<version>_amd64.deb
 ```
 
 RPM 系发行版需要在对应 Linux 主机安装 `rpm-build` 后再生成和安装，不建议在 Windows 直接把未验证的 `.rpm` 当作 Linux 安装包。
